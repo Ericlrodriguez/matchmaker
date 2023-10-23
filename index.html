@@ -1,11 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<!--
+    Author:  Eric Rodriguez
+    Project: MatchmakerfortheWeb
+-->
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matchmaker</title>
-  </head>
-  <body>
-    <h1>Matchmaker For The Web</h1>
-  </body>
+    <title>Matchmaker for the Web</title>
+    <style>
+        body{background-color: beige;}
+    </style>
+</head>
+
+<body>
+    <h1>Matchmaker for the Web <3</h1>
+    <p>Read each question carefully, then proceed to use the dropdown to select an answer.</p>
+
+    <label>Motorcycles are the best vehicle known to man.</label><br />
+    <select id="Q1">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select><br /><br />
+
+    <label>Tacos slap.</label><br />
+    <select id="Q2">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select><br /><br />
+
+    <label>Cats are the best.
+        </label><br />
+    <select id="Q3">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select><br /><br />
+
+    <label>Winter is the best season</label><br />
+    <select id="Q4">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select><br /><br />
+
+    <label>I have a dark sense of humor.</label><br />
+    <select id="Q5">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neither Agree nor Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select><br /><br />
+
+    <p>Are you sure?</p>
+
+    <br />
+    <button onclick="calculateCompatibility()">Lets See If you Have That Dawg In You</button>
+    <p id="compatibility"></p>
+
+    <p id="message"></p>
+
+<script>
+console.log("starting Matchmaker...");
+
+function calculateCompatibility() {
+    console.log("calculateCompatibility()");
+
+    const MESSAGE_GREAT = "YOU DAAAWWG!!! WOOF!!! Grab your helmet buddy, we're going riding!"
+    const MESSAGE_GOOD = "You're okay, I guess..."
+    const MESSAGE_BAD = "Kick rocks."
+
+    const DESIRED_RESPONSE = [
+        5, /* Strongly Agree */
+        5, /* Strongly Agree */
+        2, /* Disagree */
+        1, /* Strongly Disagree */
+        5, /* Strongly Agree */
+    ]
+
+    const MAX_SCORE = 25
+
+    // Get the current values of the dropdown inputs.let
+    let question1response = document.getElementById("Q1").selectedOptions[0].value;    
+    let question2response = document.getElementById("Q2").selectedOptions[0].value; 
+    let question3response = document.getElementById("Q3").selectedOptions[0].value; 
+    let question4response = document.getElementById("Q4").selectedOptions[0].value; 
+    let question5response = document.getElementById("Q5").selectedOptions[0].value; 
+
+    // Optionally log the values associated with question 1 through 5 to the console.
+    console.log("Question 1 Answers:");
+    console.log(document.getElementById("Q1").selectedOptions[0].text);
+    console.log(document.getElementById("Q1").selectedOptions[0].value);
+    console.log(question1response);
+
+    console.log("Question 2 Answers:");
+    console.log(document.getElementById("Q2").selectedOptions[0].text);
+    console.log(document.getElementById("Q2").selectedOptions[0].value);
+    console.log(question2response);
+
+    console.log("Question 3 Answers:");
+    console.log(document.getElementById("Q3").selectedOptions[0].text);
+    console.log(document.getElementById("Q3").selectedOptions[0].value);
+    console.log(question3response);
+
+    console.log("Question 4 Answers:");
+    console.log(document.getElementById("Q4").selectedOptions[0].text);
+    console.log(document.getElementById("Q4").selectedOptions[0].value);
+    console.log(question4response);
+
+    console.log("Question 5 Answers:");
+    console.log(document.getElementById("Q5").selectedOptions[0].text);
+    console.log(document.getElementById("Q5").selectedOptions[0].value);
+    console.log(question5response);
+
+    // Todo: Calculate compatibility scores.
+    let question1Compatibility = 5 -  Math.abs(question1response - DESIRED_RESPONSE[0]);  
+    let question2Compatibility = 5 -  Math.abs(question2response - DESIRED_RESPONSE[1]);
+    let question3Compatibility = 5 -  Math.abs(question3response - DESIRED_RESPONSE[2]);
+    let question4Compatibility = 5 -  Math.abs(question4response - DESIRED_RESPONSE[3]);
+    let question5Compatibility = 5 -  Math.abs(question5response - DESIRED_RESPONSE[4]);
+
+    console.log("c1="+question1Compatibility);
+    console.log("c2="+question2Compatibility);
+    console.log("c3="+question3Compatibility);
+    console.log("c4="+question4Compatibility);
+    console.log("c5="+question5Compatibility);
+
+    // Calculate total compatibility.
+    let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
+
+    // Convert totalCompatibility to a percentage.
+    totalCompatibility *= 100 / MAX_SCORE;
+    totalCompatibility = Math.round(totalCompatibility);
+    console.log("tc="+ totalCompatibility);
+
+    document.getElementById("compatibility").innerHTML = "Your compatibility is:"+totalCompatibility;
+    console.log("tc="+totalCompatibility);
+    if  (totalCompatibility >= 80) {
+        console.log(MESSAGE_GREAT);
+        document.getElementById("message").innerHTML = MESSAGE_GREAT;
+        var x = document.createElement("IMG");
+        x.setAttribute("src", "cowboys.jpg");
+        x.setAttribute("width", "304");
+        x.setAttribute("height", "228");
+        x.setAttribute("alt", "Could Be Us");
+        document.body.appendChild(x);
+    } else if (totalCompatibility >= 50) {
+        console.log(MESSAGE_GOOD);
+        document.getElementById("message").innerHTML = MESSAGE_GOOD;
+    } else {
+        console.log(MESSAGE_BAD);
+        document.getElementById("message").innerHTML = MESSAGE_BAD;
+    }
+
+}
+</script>
+
+</body>
 </html>
